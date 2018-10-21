@@ -37,7 +37,7 @@ public class WeatherForecastService {
         return extractMetrics(openWeatherMapDTO.getInfo());
     }
 
-    public OpenWeatherMapDTO getWeatherForecast(Integer cityId) throws IOException {
+    private OpenWeatherMapDTO getWeatherForecast(Integer cityId) throws IOException {
        logger.debug("getWeatherForecast: {}", cityId);
         return openWeatherMapAPI.getWeather5Day(cityId, UNIT, apiKey)
                 .execute()

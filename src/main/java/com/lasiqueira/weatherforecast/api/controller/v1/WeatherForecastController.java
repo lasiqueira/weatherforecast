@@ -2,7 +2,7 @@ package com.lasiqueira.weatherforecast.api.controller.v1;
 
 import com.lasiqueira.weatherforecast.api.converter.v1.WeatherForecastConverter;
 import com.lasiqueira.weatherforecast.api.dto.v1.WeatherForecastMetricsDTO;
-import com.lasiqueira.weatherforecast.api.exception.v1.InvalidDataException;
+import com.lasiqueira.weatherforecast.api.exception.v1.CityNotFoundException;
 import com.lasiqueira.weatherforecast.api.validator.v1.WeatherForecastValidator;
 import com.lasiqueira.weatherforecast.service.WeatherForecastService;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class WeatherForecastController {
 
     // Since we will get by city and country code, in order to be more RESTful I separated the country code from the city and made them both resources
     @GetMapping(value="/cities/{city}/countries/{countryCode}", produces = "application/json")
-    public ResponseEntity<WeatherForecastMetricsDTO> getWeatherForecastByCity(@PathVariable String city, @PathVariable String countryCode) throws InvalidDataException, IOException {
+    public ResponseEntity<WeatherForecastMetricsDTO> getWeatherForecastByCity(@PathVariable String city, @PathVariable String countryCode) throws CityNotFoundException, IOException {
         Integer cityId = weatherForecastValidator.validateCityAndCountry(city, countryCode);
         return ResponseEntity.ok(weatherForecastConverter.convertModelToDTO(weatherForecastService.getWeatherForecastMetrics(cityId)));
     }

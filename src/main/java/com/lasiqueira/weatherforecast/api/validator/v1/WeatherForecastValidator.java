@@ -3,7 +3,7 @@ package com.lasiqueira.weatherforecast.api.validator.v1;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lasiqueira.weatherforecast.api.dto.v1.CityDTO;
-import com.lasiqueira.weatherforecast.api.exception.v1.InvalidDataException;
+import com.lasiqueira.weatherforecast.api.exception.v1.CityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -35,13 +35,13 @@ public class WeatherForecastValidator {
         }
     }
 
-    public Integer validateCityAndCountry(String city, String countryCode) throws InvalidDataException{
+    public Integer validateCityAndCountry(String city, String countryCode) throws CityNotFoundException {
         logger.debug("Validating city: {} and country {}", city, countryCode);
         String key = (city+countryCode).toLowerCase();
         if(cityMap.containsKey(key)){
             return cityMap.get(key);
         } else{
-            throw new InvalidDataException("Data not supported.");
+            throw new CityNotFoundException("City not found.");
         }
     }
 

@@ -33,5 +33,6 @@ dependencies {
     implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.4.0'
 	compileOnly('org.projectlombok:lombok')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
     testImplementation group: 'io.github.benas', name: 'random-beans', version: '3.7.0'
 }

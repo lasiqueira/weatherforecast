@@ -1,4 +1,117 @@
 package com.lasiqueira.weatherforecast.api.controller.v1;
 
+import com.lasiqueira.weatherforecast.api.converter.v1.WeatherForecastConverter;
+import com.lasiqueira.weatherforecast.api.dto.v1.WeatherForecastMetricsDTO;
+import com.lasiqueira.weatherforecast.api.exception.v1.CityNotFoundException;
+import com.lasiqueira.weatherforecast.api.validator.v1.WeatherForecastValidator;
+import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
+import com.lasiqueira.weatherforecast.service.WeatherForecastService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.io.IOException;
+
+import static io.github.benas.randombeans.api.EnhancedRandom.random;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+@RunWith(SpringRunner.class)
+@WebMvcTest(WeatherForecastController.class)
 public class WeatherForecastControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private WeatherForecastValidator weatherForecastValidator;
+    @MockBean
+    private WeatherForecastService weatherForecastService;
+    @MockBean
+    private WeatherForecastConverter weatherForecastConverter;
+
+    private static final String city = "London";
+    private static final String countryCode = "GB";
+
+    private static final int CITY_ID = 2643743;
+
+    private WeatherForecastMetrics weatherForecastMetrics;
+    private WeatherForecastMetricsDTO weatherForecastMetricsDTO;
+
+    @Before
+    public void setup(){
+        weatherForecastMetrics = random(WeatherForecastMetrics.class);
+        weatherForecastMetricsDTO = WeatherForecastMetricsDTO
+                .builder()
+                .averagePressure(weatherForecastMetrics.getAveragePressure())
+                .averageTemperatureDay(weatherForecastMetrics.getAverageTemperatureDay())
+                .averageTemperatureNight(weatherForecastMetrics.getAverageTemperatureNight())
+                .build();
+    }
+
+    @Test
+    public void getWeatherForecastByCityTest() throws IOException, CityNotFoundException {
+        when(weatherForecastService.getWeatherForecastMetrics(Mockito.anyInt())).thenReturn(weatherForecastMetrics);
+        when(weatherForecastConverter.convertModelToDTO(Mockito.any(WeatherForecastMetrics.class))).thenReturn(weatherForecastMetricsDTO);
+        when(weatherForecastValidator.validateCityAndCountry(Mockito.anyString(), Mockito.anyString())).thenReturn(CITY_ID);
+        try {
+            mockMvc.perform(get("/v1/data/cities/{city}/countries/{countryCode}",city, countryCode ))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getWeatherForecastByCityInvalidTest() throws IOException, CityNotFoundException {
+        when(weatherForecastService.getWeatherForecastMetrics(Mockito.anyInt())).thenReturn(weatherForecastMetrics);
+        when(weatherForecastConverter.convertModelToDTO(Mockito.any(WeatherForecastMetrics.class))).thenReturn(weatherForecastMetricsDTO);
+        when(weatherForecastValidator.validateCityAndCountry(Mockito.anyString(), Mockito.anyString())).thenThrow(CityNotFoundException.class);
+        try {
+            mockMvc.perform(get("/v1/data/cities/{city}/countries/{countryCode}","test", countryCode ))
+                    .andExpect(status().isNotFound());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getWeatherForecastByCityWrongUrlTest() throws IOException, CityNotFoundException {
+        when(weatherForecastService.getWeatherForecastMetrics(Mockito.anyInt())).thenReturn(weatherForecastMetrics);
+        when(weatherForecastConverter.convertModelToDTO(Mockito.any(WeatherForecastMetrics.class))).thenReturn(weatherForecastMetricsDTO);
+        when(weatherForecastValidator.validateCityAndCountry(Mockito.anyString(), Mockito.anyString())).thenReturn(CITY_ID);
+        try {
+            mockMvc.perform(get("/v1/data/cities"))
+                    .andExpect(status().isNotFound());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getWeatherForecastByCityServerErrorTest() throws IOException, CityNotFoundException {
+        when(weatherForecastService.getWeatherForecastMetrics(Mockito.anyInt())).thenThrow(IOException.class);
+        when(weatherForecastConverter.convertModelToDTO(Mockito.any(WeatherForecastMetrics.class))).thenReturn(weatherForecastMetricsDTO);
+        when(weatherForecastValidator.validateCityAndCountry(Mockito.anyString(), Mockito.anyString())).thenReturn(CITY_ID);
+        try {
+            mockMvc.perform(get("/v1/data/cities"))
+                    .andExpect(status().isNotFound());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
 }
