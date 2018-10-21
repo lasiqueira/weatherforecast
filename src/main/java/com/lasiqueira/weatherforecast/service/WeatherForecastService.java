@@ -7,6 +7,8 @@ import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = {"weatherforecast"})
 public class WeatherForecastService {
     private final Logger logger;
     private final OpenWeatherMapAPI openWeatherMapAPI;
@@ -30,7 +33,7 @@ public class WeatherForecastService {
         this.apiKey = apiKey;
     }
 
-
+    @Cacheable(key = "#cityId")
     public WeatherForecastMetrics getWeatherForecastMetrics(Integer cityId) throws IOException {
         logger.debug("getWeatherForecastMetrics: {}", cityId);
         OpenWeatherMapDTO openWeatherMapDTO = getWeatherForecast(cityId);
