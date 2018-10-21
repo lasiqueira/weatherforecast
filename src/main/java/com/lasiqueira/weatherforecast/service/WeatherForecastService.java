@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -35,7 +37,7 @@ public class WeatherForecastService {
         return extractMetrics(openWeatherMapDTO.getInfo());
     }
 
-    private OpenWeatherMapDTO getWeatherForecast(Integer cityId) throws IOException {
+    public OpenWeatherMapDTO getWeatherForecast(Integer cityId) throws IOException {
        logger.debug("getWeatherForecast: {}", cityId);
         return openWeatherMapAPI.getWeather5Day(cityId, UNIT, apiKey)
                 .execute()
@@ -44,12 +46,14 @@ public class WeatherForecastService {
 
     private WeatherForecastMetrics extractMetrics(List<Info> infoList) {
         logger.debug("extractMetrics");
-        Double avgDaily = 0.0;
-        Double avgNighly = 0.0;
-        Double avgPressure = 0.0;
+        BigDecimal avgDaily = new BigDecimal("0.00");
+        BigDecimal avgNighly = new BigDecimal("0.00");
+        BigDecimal avgPressure = new BigDecimal("0.00");
         //The OpenWeatherMap API returns a fix set of data
         // but I made it dynamic in case the API changes
         int count = 0;
+        int countDaily = 0;
+        int countNightly = 0;
         for (Info info : infoList) {
             //getting only the following 3 days
             if (isValidDateInterval(info.getDtTxt().toLocalDate())) {
@@ -57,20 +61,22 @@ public class WeatherForecastService {
                 // and nightly from 18 to less than 6 in order to
                 // avoid using the same time period for both calculations
                 if (isDaily(info.getDtTxt().toLocalTime())) {
-                    avgDaily += info.getMain().getTemp();
+                    avgDaily = avgDaily.add(BigDecimal.valueOf(info.getMain().getTemp()));
+                    countDaily++;
                 } else {
-                    avgNighly += info.getMain().getTemp();
+                    avgNighly = avgNighly.add(BigDecimal.valueOf(info.getMain().getTemp()));
+                    countNightly++;
                 }
-                avgPressure += info.getMain().getPressure();
+                avgPressure = avgPressure.add(BigDecimal.valueOf(info.getMain().getPressure()));
 
                 count++;
             }
         }
         return WeatherForecastMetrics
                 .builder()
-                .averagePressure(avgPressure/count)
-                .averageTemperatureDay(avgDaily/(count/2))
-                .averageTemperatureNight(avgNighly/(count/2))
+                .averagePressure(avgPressure.divide(BigDecimal.valueOf(count), RoundingMode.HALF_UP))
+                .averageTemperatureDay(avgDaily.divide(BigDecimal.valueOf(countDaily), RoundingMode.HALF_UP))
+                .averageTemperatureNight(avgNighly.divide(BigDecimal.valueOf(countNightly), RoundingMode.HALF_UP))
                 .build();
     }
 

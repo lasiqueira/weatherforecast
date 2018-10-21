@@ -1,9 +1,14 @@
 
 package com.lasiqueira.weatherforecast.api.external.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,6 +22,8 @@ import java.util.List;
     "weather",
     "clouds",
     "wind",
+    "rain",
+    "snow",
     "sys",
     "dt_txt"
 })
@@ -33,10 +40,17 @@ public class Info {
     private Clouds clouds;
     @JsonProperty("wind")
     private Wind wind;
+    @JsonProperty("rain")
+    private Rain rain;
+    @JsonProperty("snow")
+    private Snow snow;
     @JsonProperty("sys")
     private Sys sys;
     @JsonProperty("dt_txt")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dtTxt;
 
 }

@@ -29,7 +29,7 @@ public class WeatherForecastController {
         this.weatherForecastValidator = weatherForecastValidator;
     }
 
-    // Since we weill get by city and country code, in order to be more RESTful I separated the country code from the city and made them both resources
+    // Since we will get by city and country code, in order to be more RESTful I separated the country code from the city and made them both resources
     @GetMapping(value="/cities/{city}/countries/{countryCode}", produces = "application/json")
     public ResponseEntity<WeatherForecastMetricsDTO> getWeatherForecastByCity(@PathVariable String city, @PathVariable String countryCode) throws InvalidDataException, IOException {
         Integer cityId = weatherForecastValidator.validateCityAndCountry(city, countryCode);
