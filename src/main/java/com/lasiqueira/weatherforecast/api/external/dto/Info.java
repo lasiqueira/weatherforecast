@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,21 +21,22 @@ import java.util.List;
     "dt_txt"
 })
 @Data
-public class InfoList {
+public class Info {
 
     @JsonProperty("dt")
-    public Integer dt;
+    private Integer dt;
     @JsonProperty("main")
-    public Main main;
+    private Main main;
     @JsonProperty("weather")
-    public List<Weather> weather = null;
+    private List<Weather> weather = null;
     @JsonProperty("clouds")
-    public Clouds clouds;
+    private Clouds clouds;
     @JsonProperty("wind")
-    public Wind wind;
+    private Wind wind;
     @JsonProperty("sys")
-    public Sys sys;
+    private Sys sys;
     @JsonProperty("dt_txt")
-    public String dtTxt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private LocalDateTime dtTxt;
 
 }

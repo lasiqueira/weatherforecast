@@ -10,7 +10,7 @@ import retrofit2.Retrofit;
 public class RetrofitConfiguration {
 
     @Bean
-    public OpenWeatherMapAPI getOpenWeatherMapAPI(@Value("openweathermapurl") String url){
+    public OpenWeatherMapAPI getOpenWeatherMapAPI(@Value("${openweathermap.url}") String url){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .build();

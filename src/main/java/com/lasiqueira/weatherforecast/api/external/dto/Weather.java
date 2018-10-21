@@ -17,12 +17,12 @@ import lombok.Data;
 public class Weather {
 
     @JsonProperty("id")
-    public Integer id;
+    private Integer id;
     @JsonProperty("main")
-    public String main;
+    private String main;
     @JsonProperty("description")
-    public String description;
+    private String description;
     @JsonProperty("icon")
-    public String icon;
+    private String icon;
 
 }

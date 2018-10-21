@@ -14,6 +14,6 @@ import lombok.Data;
 public class Clouds {
 
     @JsonProperty("all")
-    public Integer all;
+    private Integer all;
 
 }

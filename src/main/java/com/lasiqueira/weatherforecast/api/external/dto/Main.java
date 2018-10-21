@@ -21,20 +21,20 @@ import lombok.Data;
 public class Main {
 
     @JsonProperty("temp")
-    public Double temp;
+    private Double temp;
     @JsonProperty("temp_min")
-    public Double tempMin;
+    private Double tempMin;
     @JsonProperty("temp_max")
-    public Double tempMax;
+    private Double tempMax;
     @JsonProperty("pressure")
-    public Double pressure;
+    private Double pressure;
     @JsonProperty("sea_level")
-    public Double seaLevel;
+    private Double seaLevel;
     @JsonProperty("grnd_level")
-    public Double grndLevel;
+    private Double grndLevel;
     @JsonProperty("humidity")
-    public Integer humidity;
+    private Integer humidity;
     @JsonProperty("temp_kf")
-    public Integer tempKf;
+    private Integer tempKf;
 
 }

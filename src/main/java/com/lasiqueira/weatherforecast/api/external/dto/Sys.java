@@ -14,6 +14,6 @@ import lombok.Data;
 public class Sys {
 
     @JsonProperty("pod")
-    public String pod;
+    private String pod;
 
 }

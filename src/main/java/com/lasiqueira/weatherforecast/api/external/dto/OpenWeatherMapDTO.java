@@ -20,14 +20,14 @@ import java.util.List;
 public class OpenWeatherMapDTO {
 
     @JsonProperty("cod")
-    public String cod;
+    private String cod;
     @JsonProperty("message")
-    public Double message;
+    private Double message;
     @JsonProperty("cnt")
-    public Integer cnt;
+    private Integer cnt;
     @JsonProperty("list")
-    public List<InfoList> infoList = null;
+    private List<Info> info = null;
     @JsonProperty("city")
-    public City city;
+    private City city;
 
 }
