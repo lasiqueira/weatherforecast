@@ -15,11 +15,11 @@ import java.time.format.DateTimeParseException;
 @ControllerAdvice
 public class APIExceptionHandler {
 
-    @ExceptionHandler({InvalidDataException.class, JsonParseException.class, DateTimeParseException.class, InvalidFormatException.class, IOException.class, URISyntaxException.class, Exception.class})
+    @ExceptionHandler({CityNotFoundException.class, JsonParseException.class, DateTimeParseException.class, InvalidFormatException.class, IOException.class, URISyntaxException.class, Exception.class})
     public final ResponseEntity<ApiError> handleException(Exception ex, WebRequest request) {
 
-        if (ex.getCause() instanceof InvalidDataException) {
-            HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        if (ex.getCause() instanceof CityNotFoundException) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
 
             return new ResponseEntity<>(new ApiError(ex.getMessage()), status);
         } else if (ex.getCause() instanceof JsonParseException) {

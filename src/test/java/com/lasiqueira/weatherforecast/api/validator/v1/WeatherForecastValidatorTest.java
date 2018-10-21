@@ -1,6 +1,6 @@
 package com.lasiqueira.weatherforecast.api.validator.v1;
 
-import com.lasiqueira.weatherforecast.api.exception.v1.InvalidDataException;
+import com.lasiqueira.weatherforecast.api.exception.v1.CityNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +19,14 @@ public class WeatherForecastValidatorTest {
     private static final String countryCode = "GB";
 
     @Test
-    public void validateCityAndCountryTest() throws InvalidDataException {
+    public void validateCityAndCountryTest() throws CityNotFoundException {
         Integer expected = weatherForecastValidator.validateCityAndCountry(city, countryCode);
 
         assertNotNull(expected);
     }
 
-    @Test(expected =InvalidDataException.class)
-    public void validateCityAndCountryInvalidTest() throws InvalidDataException {
+    @Test(expected = CityNotFoundException.class)
+    public void validateCityAndCountryInvalidTest() throws CityNotFoundException {
         Integer expected = weatherForecastValidator.validateCityAndCountry("Test", countryCode);
 
     }
