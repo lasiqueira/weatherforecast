@@ -1,10 +1,12 @@
 package com.lasiqueira.weatherforecast.model;
 
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class WeatherForecastMetrics {
-    private int averageTemperatureDay;
-    private int averageTemperatureNight;
-    private int averagePressure;
+    private final Double averageTemperatureDay;
+    private final Double averageTemperatureNight;
+    private final Double averagePressure;
 }

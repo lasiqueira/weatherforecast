@@ -8,5 +8,5 @@ import retrofit2.http.Query;
 public interface OpenWeatherMapAPI {
 
     @GET("data/2.5/forecast")
-    Call<OpenWeatherMapDTO> getWeather5Day(@Query("q") String city,@Query("units")String unit, @Query("APPID") String apiKey);
+    Call<OpenWeatherMapDTO> getWeather5Day(@Query("id") final Integer cityId, @Query("units") final String unit, @Query("APPID") final String apiKey);
 }

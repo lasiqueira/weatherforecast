@@ -15,8 +15,8 @@ import lombok.Data;
 public class Wind {
 
     @JsonProperty("speed")
-    public Double speed;
+    private Double speed;
     @JsonProperty("deg")
-    public Double deg;
+    private Double deg;
 
 }

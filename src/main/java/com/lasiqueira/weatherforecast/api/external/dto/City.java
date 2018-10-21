@@ -18,14 +18,14 @@ import lombok.Data;
 public class City {
 
     @JsonProperty("id")
-    public Integer id;
+    private Integer id;
     @JsonProperty("name")
-    public String name;
+    private String name;
     @JsonProperty("coord")
-    public Coord coord;
+    private Coord coord;
     @JsonProperty("country")
-    public String country;
+    private String country;
     @JsonProperty("population")
-    public Integer population;
+    private Integer population;
 
 }

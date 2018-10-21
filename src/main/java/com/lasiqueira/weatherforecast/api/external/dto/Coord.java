@@ -15,8 +15,8 @@ import lombok.Data;
 public class Coord {
 
     @JsonProperty("lat")
-    public Double lat;
+    private Double lat;
     @JsonProperty("lon")
-    public Double lon;
+    private Double lon;
 
 }

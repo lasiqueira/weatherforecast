@@ -1,5 +1,5 @@
 
-package com.lasiqueira.weatherforecast.api.external.dto;
+package com.lasiqueira.weatherforecast.api.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,20 +9,20 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "id",
-    "main",
-    "description",
-    "icon"
+    "name",
+    "country",
+    "coord"
 })
 @Data
-public class Weather {
+public class CityDTO {
 
     @JsonProperty("id")
     private Integer id;
-    @JsonProperty("main")
-    private String main;
-    @JsonProperty("description")
-    private String description;
-    @JsonProperty("icon")
-    private String icon;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("country")
+    private String country;
+    @JsonProperty("coord")
+    private Coord coord;
 
 }
