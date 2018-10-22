@@ -1,5 +1,5 @@
 # weatherforecast
-Java 1.8 and Spring boot 2 Transaction REST API
+Java 1.8 and Spring boot 2 Weather Forecast REST API
 
 ## Setup
 You need to inform an API Key for the OpenWeatherMAP API in application.properties
