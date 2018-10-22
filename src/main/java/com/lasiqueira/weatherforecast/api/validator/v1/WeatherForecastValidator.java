@@ -16,12 +16,13 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Component
 public class WeatherForecastValidator {
     private final Logger logger;
-    private final Map<String, Integer> cityMap;
+    private final Map<String, CityDTO> cityMap;
 
     public WeatherForecastValidator() throws URISyntaxException, IOException {
         this.logger = LoggerFactory.getLogger(WeatherForecastValidator.class);
@@ -31,17 +32,45 @@ public class WeatherForecastValidator {
         Path path = Paths.get(getClass().getClassLoader().getResource("json/city.list.json").toURI());
         List<CityDTO> cityDTOList = objectMapper.readValue(Files.readAllBytes(path), new TypeReference<List<CityDTO>>() {});
         for(CityDTO cityDTO: cityDTOList){
-            cityMap.put((cityDTO.getName()+cityDTO.getCountry()).toLowerCase(), cityDTO.getId());
+            cityMap.put((cityDTO.getName()+cityDTO.getCountry()).toLowerCase(), cityDTO);
         }
     }
 
-    public Integer validateCityAndCountry(String city, String countryCode) throws CityNotFoundException {
-        logger.debug("Validating city: {} and country {}", city, countryCode);
-        String key = (city+countryCode).toLowerCase();
-        if(cityMap.containsKey(key)){
-            return cityMap.get(key);
+    public Integer validateCityAndCountry(String city, Optional<String> countryCode) throws CityNotFoundException {
+        logger.debug("Validating city: {} and country {}", city, countryCode.orElse(""));
+        String key = "";
+        CityDTO cityDTO= null;
+
+        if(countryCode.isPresent()){
+            key = (city + countryCode.get()).toLowerCase();
+            if(cityMap.containsKey(key)){
+                cityDTO = cityMap.get(key);
+            }
         } else{
+            cityDTO = validateByCityOnly(city);
+        }
+        if(cityDTO == null){
             throw new CityNotFoundException("City not found.");
+        } else {
+            return cityDTO.getId();
+        }
+    }
+
+    private CityDTO validateByCityOnly(String city) throws CityNotFoundException{
+        String key = city.toLowerCase();
+        CityDTO cityDTO= null;
+        if(!key.isEmpty()) {
+            for (String mapKey : cityMap.keySet()) {
+                if (cityMap.get(mapKey).getName().toLowerCase().equals(key)) {
+                    cityDTO = cityMap.get(mapKey);
+                    break;
+                }
+            }
+        }
+        if(cityDTO == null){
+            throw new CityNotFoundException("City not found.");
+        }else {
+            return cityDTO;
         }
     }
 
