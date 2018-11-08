@@ -31,9 +31,9 @@ public class WeatherForecastController {
     }
 
     // Since we will get by city and country code, in order to be more RESTful I separated the country code from the city and made them both resources
-    @GetMapping(value="/cities/{city}/countries/{countryCode}", produces = "application/json")
+    @GetMapping(value="/countries/{countryCode}/cities/{city}", produces = "application/json")
     public ResponseEntity<WeatherForecastMetricsDTO> getWeatherForecastByCityAndCountry(@PathVariable String city, @PathVariable String countryCode) throws CityNotFoundException, IOException {
-        logger.debug("getWeatherForecastByCity: city:{}, countryCode:{}", city, countryCode);
+        logger.debug("getWeatherForecastByCity: countryCode:{}, city:{},", countryCode, city);
         Integer cityId = weatherForecastValidator.validateCityAndCountry(city.trim(), Optional.of(countryCode.trim()));
         return ResponseEntity.ok(weatherForecastConverter.convertModelToDTO(weatherForecastService.getWeatherForecastMetrics(cityId)));
     }

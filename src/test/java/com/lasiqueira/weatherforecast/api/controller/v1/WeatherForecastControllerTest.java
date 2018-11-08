@@ -7,7 +7,6 @@ import com.lasiqueira.weatherforecast.api.validator.v1.WeatherForecastValidator;
 import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
 import com.lasiqueira.weatherforecast.service.WeatherForecastService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -41,6 +40,7 @@ public class WeatherForecastControllerTest {
     private WeatherForecastConverter weatherForecastConverter;
 
     private static final String CITY = "London";
+    private static final String INVALID_CITY = "Londonnnnn";
     private static final String COUNTRY_CODE = "GB";
 
     private static final int CITY_ID = 2643743;
@@ -65,7 +65,7 @@ public class WeatherForecastControllerTest {
         when(weatherForecastConverter.convertModelToDTO(Mockito.any(WeatherForecastMetrics.class))).thenReturn(weatherForecastMetricsDTO);
         when(weatherForecastValidator.validateCityAndCountry(Mockito.anyString(), Optional.of(Mockito.anyString()))).thenReturn(CITY_ID);
         try {
-            mockMvc.perform(get("/v1/data/cities/{city}/countries/{countryCode}",CITY, COUNTRY_CODE ))
+            mockMvc.perform(get("/v1/data/countries/{countryCode}/cities/{city}", COUNTRY_CODE, CITY))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
         } catch (Exception e) {
@@ -77,9 +77,9 @@ public class WeatherForecastControllerTest {
     public void getWeatherForecastByCityNotFoundTest() throws IOException, CityNotFoundException {
         when(weatherForecastService.getWeatherForecastMetrics(Mockito.anyInt())).thenReturn(weatherForecastMetrics);
         when(weatherForecastConverter.convertModelToDTO(Mockito.any(WeatherForecastMetrics.class))).thenReturn(weatherForecastMetricsDTO);
-        when(weatherForecastValidator.validateCityAndCountry("test", Optional.of(COUNTRY_CODE))).thenThrow(new CityNotFoundException("City not found."));
+        when(weatherForecastValidator.validateCityAndCountry(INVALID_CITY, Optional.of(COUNTRY_CODE))).thenThrow(new CityNotFoundException("City not found."));
         try {
-            mockMvc.perform(get("/v1/data/cities/{city}/countries/{countryCode}","test", COUNTRY_CODE ))
+            mockMvc.perform(get("/v1/data/countries/{countryCode}/cities/{city}", COUNTRY_CODE, CITY))
                     .andExpect(status().isNotFound());
         } catch (Exception e) {
             e.printStackTrace();
