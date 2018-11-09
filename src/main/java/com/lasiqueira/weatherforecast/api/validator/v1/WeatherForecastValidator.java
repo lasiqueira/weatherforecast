@@ -55,14 +55,15 @@ public class WeatherForecastValidator {
 
     private CityDTO validateByCityOnly(String city) throws CityNotFoundException{
         String key = city.toLowerCase();
+        CityDTO cityDTO = null;
         if(!key.isEmpty()) {
-           return cityMap.values()
+           cityDTO = cityMap.values()
                    .stream()
                    .filter(cityDTO1 -> cityDTO1.getName().toLowerCase().equals(key))
                    .findFirst()
                    .orElse(null);
         }
-        return null;
+        return cityDTO;
     }
 
 
