@@ -35,18 +35,18 @@ public class WeatherForecastValidatorTest {
 
     @Test
     public void validateCityAndCountryCityOnlyTest()   throws CityNotFoundException {
-        Integer expected = weatherForecastValidator.validateCityAndCountry(CITY, Optional.ofNullable(null));
+        Integer expected = weatherForecastValidator.validateCityAndCountry(CITY, Optional.empty());
 
         assertNotNull(expected);
     }
 
     @Test(expected = CityNotFoundException.class)
     public void validateCityAndCountryCityOnlyInvalidTest()   throws CityNotFoundException {
-        Integer expected = weatherForecastValidator.validateCityAndCountry("ABCDEFGHIJ", Optional.ofNullable(null));
+        Integer expected = weatherForecastValidator.validateCityAndCountry("ABCDEFGHIJ", Optional.empty());
     }
 
     @Test(expected = CityNotFoundException.class)
     public void validateCityAndCountryCityOnlyEmptyTest()   throws CityNotFoundException {
-        Integer expected = weatherForecastValidator.validateCityAndCountry("", Optional.ofNullable(null));
+        Integer expected = weatherForecastValidator.validateCityAndCountry("", Optional.empty());
     }
 }
