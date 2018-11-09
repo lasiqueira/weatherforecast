@@ -30,11 +30,11 @@ public class WeatherForecastConverterTest {
 
     @Test
     public void convertModelToDTOTest(){
-        WeatherForecastMetricsDTO expected = weatherForecastConverter.convertModelToDTO(weatherForecastMetrics);
+        WeatherForecastMetricsDTO result = weatherForecastConverter.convertModelToDTO(weatherForecastMetrics);
 
-        assertNotNull(expected);
-        assertEquals(expected.getAveragePressure(), weatherForecastMetrics.getAveragePressure());
-        assertEquals(expected.getAverageTemperatureDay(), weatherForecastMetrics.getAverageTemperatureDay());
-        assertEquals(expected.getAverageTemperatureNight(), weatherForecastMetrics.getAverageTemperatureNight());
+        assertNotNull(result);
+        assertEquals(weatherForecastMetrics.getAveragePressure(),result.getAveragePressure());
+        assertEquals(weatherForecastMetrics.getAverageTemperatureDay(), result.getAverageTemperatureDay());
+        assertEquals(weatherForecastMetrics.getAverageTemperatureNight(), result.getAverageTemperatureNight());
     }
 }

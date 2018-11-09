@@ -94,12 +94,12 @@ public class WeatherForecastServiceTest {
     public void getWeatherForecastMetricsTest() throws IOException {
         when(openWeatherMapAPI.getWeather5Day(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString())).thenReturn(call);
         when(call.execute()).thenReturn(Response.success(openWeatherMapDTO));
-        WeatherForecastMetrics expected = weatherForecastService.getWeatherForecastMetrics(CITY_ID);
-        assertNotNull(expected);
+        WeatherForecastMetrics result = weatherForecastService.getWeatherForecastMetrics(CITY_ID);
+        assertNotNull(result);
 
-        assertEquals(expected.getAveragePressure(), new BigDecimal("637.50"));
-        assertEquals(expected.getAverageTemperatureDay(), new BigDecimal("28.50"));
-        assertEquals(expected.getAverageTemperatureNight(), new BigDecimal("21.00"));
+        assertEquals(new BigDecimal("637.50"), result.getAveragePressure());
+        assertEquals(new BigDecimal("28.50"),result.getAverageTemperatureDay());
+        assertEquals(new BigDecimal("21.00"), result.getAverageTemperatureNight());
     }
 
     @Test(expected = IOException.class)
