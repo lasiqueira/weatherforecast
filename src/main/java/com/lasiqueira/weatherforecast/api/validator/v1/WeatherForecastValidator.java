@@ -31,16 +31,13 @@ public class WeatherForecastValidator {
 
         Path path = Paths.get(getClass().getClassLoader().getResource("json/city.list.json").toURI());
         List<CityDTO> cityDTOList = objectMapper.readValue(Files.readAllBytes(path), new TypeReference<List<CityDTO>>() {});
-        for(CityDTO cityDTO: cityDTOList){
-            cityMap.put((cityDTO.getName()+cityDTO.getCountry()).toLowerCase(), cityDTO);
-        }
+        cityDTOList.forEach(cityDTO -> cityMap.put((cityDTO.getName()+cityDTO.getCountry()).toLowerCase(), cityDTO));
     }
 
     public Integer validateCityAndCountry(String city, Optional<String> countryCode) throws CityNotFoundException {
         logger.debug("Validating city: {} and country {}", city, countryCode.orElse(""));
         String key = "";
-        CityDTO cityDTO= null;
-
+        CityDTO cityDTO = null;
         if(countryCode.isPresent()){
             key = (city + countryCode.get()).toLowerCase();
             if(cityMap.containsKey(key)){
@@ -58,20 +55,14 @@ public class WeatherForecastValidator {
 
     private CityDTO validateByCityOnly(String city) throws CityNotFoundException{
         String key = city.toLowerCase();
-        CityDTO cityDTO= null;
         if(!key.isEmpty()) {
-            for (String mapKey : cityMap.keySet()) {
-                if (cityMap.get(mapKey).getName().toLowerCase().equals(key)) {
-                    cityDTO = cityMap.get(mapKey);
-                    break;
-                }
-            }
+           return cityMap.values()
+                   .stream()
+                   .filter(cityDTO1 -> cityDTO1.getName().toLowerCase().equals(key))
+                   .findFirst()
+                   .orElse(null);
         }
-        if(cityDTO == null){
-            throw new CityNotFoundException("City not found.");
-        }else {
-            return cityDTO;
-        }
+        return null;
     }
 
 
