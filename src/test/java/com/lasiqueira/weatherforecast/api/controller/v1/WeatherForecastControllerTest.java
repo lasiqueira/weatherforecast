@@ -79,7 +79,7 @@ public class WeatherForecastControllerTest {
         when(weatherForecastConverter.convertModelToDTO(Mockito.any(WeatherForecastMetrics.class))).thenReturn(weatherForecastMetricsDTO);
         when(weatherForecastValidator.validateCityAndCountry(INVALID_CITY, Optional.of(COUNTRY_CODE))).thenThrow(new CityNotFoundException("City not found."));
         try {
-            mockMvc.perform(get("/v1/data/countries/{countryCode}/cities/{city}", COUNTRY_CODE, CITY))
+            mockMvc.perform(get("/v1/data/countries/{countryCode}/cities/{city}", COUNTRY_CODE, INVALID_CITY))
                     .andExpect(status().isNotFound());
         } catch (Exception e) {
             e.printStackTrace();
