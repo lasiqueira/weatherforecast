@@ -2,18 +2,20 @@ package com.lasiqueira.weatherforecast.service;
 
 
 import com.lasiqueira.weatherforecast.api.external.client.OpenWeatherMapAPI;
-import com.lasiqueira.weatherforecast.api.external.dto.Info;
-import com.lasiqueira.weatherforecast.api.external.dto.Main;
-import com.lasiqueira.weatherforecast.api.external.dto.OpenWeatherMapDTO;
+import com.lasiqueira.weatherforecast.api.external.dto.openweather.Info;
+import com.lasiqueira.weatherforecast.api.external.dto.openweather.Main;
+import com.lasiqueira.weatherforecast.api.external.dto.openweather.OpenWeatherMapDTO;
 import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -24,12 +26,13 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class WeatherForecastServiceTest {
     @Autowired
     private WeatherForecastService weatherForecastService;
@@ -42,7 +45,7 @@ public class WeatherForecastServiceTest {
 
     private static final int CITY_ID= 2643743;
 
-    @Before
+    @BeforeAll
     public void setup(){
         openWeatherMapDTO = random(OpenWeatherMapDTO.class);
         openWeatherMapDTO.setInfo(new ArrayList<>());
@@ -102,11 +105,11 @@ public class WeatherForecastServiceTest {
         assertEquals(new BigDecimal("21.00"), result.getAverageTemperatureNight());
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void getWeatherForecastMetricsExceptionTest() throws IOException {
         when(openWeatherMapAPI.getWeather5Day(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString())).thenReturn(call);
         when(call.execute()).thenThrow(IOException.class);
-        WeatherForecastMetrics expected = weatherForecastService.getWeatherForecastMetrics(CITY_ID);
+        Assertions.assertThrows(IOException.class, () -> weatherForecastService.getWeatherForecastMetrics(CITY_ID));
     }
 
 

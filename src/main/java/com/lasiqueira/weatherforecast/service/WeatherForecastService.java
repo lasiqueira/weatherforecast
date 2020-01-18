@@ -1,8 +1,8 @@
 package com.lasiqueira.weatherforecast.service;
 
 import com.lasiqueira.weatherforecast.api.external.client.OpenWeatherMapAPI;
-import com.lasiqueira.weatherforecast.api.external.dto.Info;
-import com.lasiqueira.weatherforecast.api.external.dto.OpenWeatherMapDTO;
+import com.lasiqueira.weatherforecast.api.external.dto.openweather.Info;
+import com.lasiqueira.weatherforecast.api.external.dto.openweather.OpenWeatherMapDTO;
 import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

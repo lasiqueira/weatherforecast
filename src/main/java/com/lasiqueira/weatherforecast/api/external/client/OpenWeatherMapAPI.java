@@ -1,6 +1,6 @@
 package com.lasiqueira.weatherforecast.api.external.client;
 
-import com.lasiqueira.weatherforecast.api.external.dto.OpenWeatherMapDTO;
+import com.lasiqueira.weatherforecast.api.external.dto.openweather.OpenWeatherMapDTO;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

@@ -30,7 +30,5 @@ public class RetrofitConfiguration {
                 .build();
 
         return  retrofit.create(OpenWeatherMapAPI.class);
-
-
     }
 }

@@ -6,15 +6,16 @@ import com.lasiqueira.weatherforecast.api.exception.v1.CityNotFoundException;
 import com.lasiqueira.weatherforecast.api.validator.v1.WeatherForecastValidator;
 import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
 import com.lasiqueira.weatherforecast.service.WeatherForecastService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
@@ -27,8 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(WeatherForecastController.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class WeatherForecastControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -48,7 +50,7 @@ public class WeatherForecastControllerTest {
     private WeatherForecastMetrics weatherForecastMetrics;
     private WeatherForecastMetricsDTO weatherForecastMetricsDTO;
 
-    @Before
+    @BeforeAll
     public void setup(){
         weatherForecastMetrics = random(WeatherForecastMetrics.class);
         weatherForecastMetricsDTO = WeatherForecastMetricsDTO
@@ -67,7 +69,7 @@ public class WeatherForecastControllerTest {
         try {
             mockMvc.perform(get("/v1/data/countries/{countryCode}/cities/{city}", COUNTRY_CODE, CITY))
                     .andExpect(status().isOk())
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,7 +122,7 @@ public class WeatherForecastControllerTest {
             mockMvc.perform(get("/v1/data")
             .param("city", CITY + ", " + COUNTRY_CODE))
                     .andExpect(status().isOk())
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,7 +150,7 @@ public class WeatherForecastControllerTest {
             mockMvc.perform(get("/v1/data")
                     .param("city"))
                     .andExpect(status().isOk())
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON));
         } catch (Exception e) {
             e.printStackTrace();
         }
