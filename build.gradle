@@ -1,28 +1,16 @@
-buildscript {
-	ext {
-		springBootVersion = '2.1.0.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+plugins {
+	id 'org.springframework.boot' version '2.2.3.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
 }
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
 
 group = 'com.lasiqueira'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+sourceCompatibility = '13'
 
 repositories {
 	mavenCentral()
 }
-
 
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
@@ -34,8 +22,11 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-cache')
     implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.6.2'
 
-    compileOnly('org.projectlombok:lombok')
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
     testImplementation group: 'io.github.benas', name: 'random-beans', version: '3.7.0'
+}
+test {
+	useJUnitPlatform()
 }

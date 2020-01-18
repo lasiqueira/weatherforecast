@@ -58,9 +58,9 @@ public class WeatherForecastValidator {
         Optional<CityDTO> cityDTO = Optional.empty();
         if(!key.isEmpty()) {
            cityDTO = cityMap.values()
-                   .stream()
-                   .filter(cityDTO1 -> cityDTO1.getName().toLowerCase().equals(key))
-                   .findFirst();
+                    .stream()
+                    .filter(cityDTO1 -> cityDTO1.getName().toLowerCase().equals(key))
+                    .findFirst();
         }
         return cityDTO;
     }

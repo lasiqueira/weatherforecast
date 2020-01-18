@@ -3,26 +3,28 @@ package com.lasiqueira.weatherforecast.api.converter.v1;
 
 import com.lasiqueira.weatherforecast.api.dto.v1.WeatherForecastMetricsDTO;
 import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class WeatherForecastConverterTest {
     @Autowired
     private WeatherForecastConverter weatherForecastConverter;
 
     private WeatherForecastMetrics weatherForecastMetrics;
 
-    @Before
+    @BeforeAll
     public void setup(){
         weatherForecastMetrics = random(WeatherForecastMetrics.class);
     }

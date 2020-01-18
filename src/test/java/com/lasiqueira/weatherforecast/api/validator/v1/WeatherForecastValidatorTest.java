@@ -1,18 +1,21 @@
 package com.lasiqueira.weatherforecast.api.validator.v1;
 
 import com.lasiqueira.weatherforecast.api.exception.v1.CityNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class WeatherForecastValidatorTest {
     @Autowired
     private WeatherForecastValidator weatherForecastValidator;
@@ -27,9 +30,9 @@ public class WeatherForecastValidatorTest {
         assertNotNull(result);
     }
 
-    @Test(expected = CityNotFoundException.class)
+    @Test
     public void validateCityAndCountryInvalidTest() throws CityNotFoundException {
-        Integer result = weatherForecastValidator.validateCityAndCountry("Test", Optional.of(COUNTRY_CODE));
+        Assertions.assertThrows(CityNotFoundException.class, () -> weatherForecastValidator.validateCityAndCountry("Test", Optional.of(COUNTRY_CODE)));
 
     }
 
@@ -40,13 +43,13 @@ public class WeatherForecastValidatorTest {
         assertNotNull(result);
     }
 
-    @Test(expected = CityNotFoundException.class)
+    @Test
     public void validateCityAndCountryCityOnlyInvalidTest()   throws CityNotFoundException {
-        Integer result = weatherForecastValidator.validateCityAndCountry("ABCDEFGHIJ", Optional.empty());
+        Assertions.assertThrows(CityNotFoundException.class, () -> weatherForecastValidator.validateCityAndCountry("ABCDEFGHIJ", Optional.empty()));
     }
 
-    @Test(expected = CityNotFoundException.class)
+    @Test
     public void validateCityAndCountryCityOnlyEmptyTest()   throws CityNotFoundException {
-        Integer result = weatherForecastValidator.validateCityAndCountry("", Optional.empty());
+        Assertions.assertThrows(CityNotFoundException.class, () -> weatherForecastValidator.validateCityAndCountry("", Optional.empty()));
     }
 }
