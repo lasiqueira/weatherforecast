@@ -8,7 +8,7 @@ You need to inform an API Key for the OpenWeatherMAP API in application.properti
 
 You can get one by making a free account at [https://openweathermap.org/]
 
-You need [JDK1.8+](https://jdk.java.net/) and [Gradle 4.8.1+](https://gradle.org/releases/) to build and run this project.
+You need [JDK13+](https://jdk.java.net/) and [Gradle 6.0.1+](https://gradle.org/releases/) to build and run this project.
 
 ## Building
 `gradle clean build`
