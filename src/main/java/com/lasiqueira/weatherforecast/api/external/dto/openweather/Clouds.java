@@ -28,7 +28,7 @@ public class Clouds {
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof Clouds)) return false;
-        final Clouds other = (Clouds) o;
+        final var other = (Clouds) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$all = this.getAll();
         final Object other$all = other.getAll();
@@ -41,7 +41,7 @@ public class Clouds {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final Object $all = this.getAll();
         result = result * PRIME + ($all == null ? 43 : $all.hashCode());

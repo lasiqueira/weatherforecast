@@ -5,7 +5,6 @@ import com.lasiqueira.weatherforecast.api.external.client.OpenWeatherMapAPI;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.Info;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.Main;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.OpenWeatherMapDTO;
-import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -49,16 +48,16 @@ public class WeatherForecastServiceTest {
     public void setup(){
         openWeatherMapDTO = random(OpenWeatherMapDTO.class);
         openWeatherMapDTO.setInfo(new ArrayList<>());
-        Info info1 = new Info();
-        Main main1 = new Main();
-        Info info2 = new Info();
-        Main main2 = new Main();
-        Info info3 = new Info();
-        Main main3 = new Main();
-        Info info4 = new Info();
-        Main main4 = new Main();
-        Info info5 = new Info();
-        Main main5 = new Main();
+        var info1 = new Info();
+        var main1 = new Main();
+        var info2 = new Info();
+        var main2 = new Main();
+        var info3 = new Info();
+        var main3 = new Main();
+        var info4 = new Info();
+        var main4 = new Main();
+        var info5 = new Info();
+        var main5 = new Main();
         info1.setDtTxt(LocalDateTime.now(ZoneId.of("UTC")).plusDays(1).withHour(7));
         main1.setTemp(32.00);
         main1.setPressure(800.00);
@@ -97,7 +96,7 @@ public class WeatherForecastServiceTest {
     public void getWeatherForecastMetricsTest() throws IOException {
         when(openWeatherMapAPI.getWeather5Day(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString())).thenReturn(call);
         when(call.execute()).thenReturn(Response.success(openWeatherMapDTO));
-        WeatherForecastMetrics result = weatherForecastService.getWeatherForecastMetrics(CITY_ID);
+        var result = weatherForecastService.getWeatherForecastMetrics(CITY_ID);
         assertNotNull(result);
 
         assertEquals(new BigDecimal("637.50"), result.getAveragePressure());

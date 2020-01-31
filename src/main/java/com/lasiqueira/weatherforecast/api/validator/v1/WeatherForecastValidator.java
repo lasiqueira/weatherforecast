@@ -36,7 +36,7 @@ public class WeatherForecastValidator {
 
     public Integer validateCityAndCountry(String city, Optional<String> countryCode) throws CityNotFoundException {
         logger.debug("Validating city: {} and country {}", city, countryCode.orElse(""));
-        String key = "";
+        var key = "";
         Optional<CityDTO> cityDTO = Optional.empty();
         if(countryCode.isPresent()){
             key = (city + countryCode.get()).toLowerCase();
@@ -54,7 +54,7 @@ public class WeatherForecastValidator {
     }
 
     private Optional<CityDTO> validateByCityOnly(String city) throws CityNotFoundException{
-        String key = city.toLowerCase();
+        var key = city.toLowerCase();
         Optional<CityDTO> cityDTO = Optional.empty();
         if(!key.isEmpty()) {
            cityDTO = cityMap.values()

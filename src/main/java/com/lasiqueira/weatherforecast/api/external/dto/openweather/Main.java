@@ -105,7 +105,7 @@ public class Main {
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof Main)) return false;
-        final Main other = (Main) o;
+        final var other = (Main) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$temp = this.getTemp();
         final Object other$temp = other.getTemp();
@@ -139,7 +139,7 @@ public class Main {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final Object $temp = this.getTemp();
         result = result * PRIME + ($temp == null ? 43 : $temp.hashCode());

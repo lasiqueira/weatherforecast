@@ -39,7 +39,7 @@ public class Coord {
     public boolean equals(final java.lang.Object o) {
         if (o == this) return true;
         if (!(o instanceof Coord)) return false;
-        final Coord other = (Coord) o;
+        final var other = (Coord) o;
         if (!other.canEqual((java.lang.Object) this)) return false;
         final java.lang.Object this$lon = this.lon;
         final java.lang.Object other$lon = other.lon;
@@ -55,7 +55,7 @@ public class Coord {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final java.lang.Object $lon = this.lon;
         result = result * PRIME + ($lon == null ? 43 : $lon.hashCode());

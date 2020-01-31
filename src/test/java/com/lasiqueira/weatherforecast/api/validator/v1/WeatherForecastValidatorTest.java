@@ -25,7 +25,7 @@ public class WeatherForecastValidatorTest {
 
     @Test
     public void validateCityAndCountryTest() throws CityNotFoundException {
-        Integer result = weatherForecastValidator.validateCityAndCountry(CITY, Optional.of(COUNTRY_CODE));
+        var result = weatherForecastValidator.validateCityAndCountry(CITY, Optional.of(COUNTRY_CODE));
 
         assertNotNull(result);
     }
@@ -38,7 +38,7 @@ public class WeatherForecastValidatorTest {
 
     @Test
     public void validateCityAndCountryCityOnlyTest()   throws CityNotFoundException {
-        Integer result = weatherForecastValidator.validateCityAndCountry(CITY, Optional.empty());
+        var result = weatherForecastValidator.validateCityAndCountry(CITY, Optional.empty());
 
         assertNotNull(result);
     }

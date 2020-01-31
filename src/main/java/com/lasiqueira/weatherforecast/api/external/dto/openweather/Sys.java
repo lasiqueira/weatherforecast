@@ -28,7 +28,7 @@ public class Sys {
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof Sys)) return false;
-        final Sys other = (Sys) o;
+        final var other = (Sys) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$pod = this.getPod();
         final Object other$pod = other.getPod();
@@ -41,7 +41,7 @@ public class Sys {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final Object $pod = this.getPod();
         result = result * PRIME + ($pod == null ? 43 : $pod.hashCode());

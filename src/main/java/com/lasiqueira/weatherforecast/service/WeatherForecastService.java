@@ -36,7 +36,7 @@ public class WeatherForecastService {
     @Cacheable(key = "#cityId")
     public WeatherForecastMetrics getWeatherForecastMetrics(Integer cityId) throws IOException {
         logger.debug("getWeatherForecastMetrics: {}", cityId);
-        OpenWeatherMapDTO openWeatherMapDTO = getWeatherForecast(cityId);
+        var openWeatherMapDTO = getWeatherForecast(cityId);
         return extractMetrics(openWeatherMapDTO.getInfo());
     }
 
@@ -49,15 +49,15 @@ public class WeatherForecastService {
 
     private WeatherForecastMetrics extractMetrics(List<Info> infoList) {
         logger.debug("extractMetrics");
-        BigDecimal avgDaily = new BigDecimal("0.00");
-        BigDecimal avgNighly = new BigDecimal("0.00");
-        BigDecimal avgPressure = new BigDecimal("0.00");
+        var avgDaily = new BigDecimal("0.00");
+        var avgNighly = new BigDecimal("0.00");
+        var avgPressure = new BigDecimal("0.00");
 
-        List<Info> validMetrics = infoList.stream()
+        var validMetrics = infoList.stream()
                 .filter(info -> isValidDateInterval(info.getDtTxt().toLocalDate())).collect(Collectors.toList());
-        List<Info> dailyMetrics = validMetrics.stream()
+        var dailyMetrics = validMetrics.stream()
                 .filter(info -> isDaily(info.getDtTxt().toLocalTime())).collect(Collectors.toList());
-        List<Info> nightlyMetrics = validMetrics.stream()
+        var nightlyMetrics = validMetrics.stream()
                 .filter(info -> !isDaily(info.getDtTxt().toLocalTime())).collect(Collectors.toList());
 
         avgPressure = avgPressure.add(BigDecimal.valueOf(
@@ -88,19 +88,13 @@ public class WeatherForecastService {
 
     private boolean isValidDateInterval(LocalDate forecastDate) {
         logger.debug("isValidDateInterval: {}", forecastDate);
-        LocalDate today = LocalDate.now(ZoneId.of("UTC"));
-        if (forecastDate.isAfter(today) && forecastDate.isBefore(today.plusDays(4))) {
-            return true;
-        }
-        return false;
+        var today = LocalDate.now(ZoneId.of("UTC"));
+        return forecastDate.isAfter(today) && forecastDate.isBefore(today.plusDays(4));
     }
 
     private boolean isDaily(LocalTime forecastTime) {
         logger.debug("isDaily: {}", forecastTime);
-        if (forecastTime.getHour() >= 6 && forecastTime.getHour() < 18) {
-            return true;
-        }
-        return false;
+        return forecastTime.getHour() >= 6 && forecastTime.getHour() < 18;
     }
 
 

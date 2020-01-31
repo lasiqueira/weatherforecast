@@ -61,7 +61,7 @@ public class CityDTO {
     public boolean equals(final java.lang.Object o) {
         if (o == this) return true;
         if (!(o instanceof CityDTO)) return false;
-        final CityDTO other = (CityDTO) o;
+        final var other = (CityDTO) o;
         if (!other.canEqual((java.lang.Object) this)) return false;
         final java.lang.Object this$id = this.id;
         final java.lang.Object other$id = other.id;

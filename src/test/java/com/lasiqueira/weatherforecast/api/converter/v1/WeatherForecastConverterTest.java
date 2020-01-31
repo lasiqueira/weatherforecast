@@ -32,7 +32,7 @@ public class WeatherForecastConverterTest {
 
     @Test
     public void convertModelToDTOTest(){
-        WeatherForecastMetricsDTO result = weatherForecastConverter.convertModelToDTO(weatherForecastMetrics);
+        var result = weatherForecastConverter.convertModelToDTO(weatherForecastMetrics);
 
         assertNotNull(result);
         assertEquals(weatherForecastMetrics.getAveragePressure(),result.getAveragePressure());
