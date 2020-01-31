@@ -26,7 +26,7 @@ public class Rain {
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof Rain)) return false;
-        final Rain other = (Rain) o;
+        final var other = (Rain) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$val = this.getVal();
         final Object other$val = other.getVal();
@@ -39,7 +39,7 @@ public class Rain {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final Object $val = this.getVal();
         result = result * PRIME + ($val == null ? 43 : $val.hashCode());

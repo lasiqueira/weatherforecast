@@ -32,7 +32,7 @@ public class WeatherForecastMetrics {
     public boolean equals(final java.lang.Object o) {
         if (o == this) return true;
         if (!(o instanceof WeatherForecastMetrics)) return false;
-        final WeatherForecastMetrics other = (WeatherForecastMetrics) o;
+        final var other = (WeatherForecastMetrics) o;
         if (!other.canEqual((java.lang.Object) this)) return false;
         final java.lang.Object this$averageTemperatureDay = this.averageTemperatureDay;
         final java.lang.Object other$averageTemperatureDay = other.averageTemperatureDay;
@@ -54,7 +54,7 @@ public class WeatherForecastMetrics {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final java.lang.Object $averageTemperatureDay = this.averageTemperatureDay;
         result = result * PRIME + ($averageTemperatureDay == null ? 43 : $averageTemperatureDay.hashCode());

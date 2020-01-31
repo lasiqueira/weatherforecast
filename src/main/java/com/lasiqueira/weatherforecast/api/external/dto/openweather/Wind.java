@@ -39,7 +39,7 @@ public class Wind {
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof Wind)) return false;
-        final Wind other = (Wind) o;
+        final var other = (Wind) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$speed = this.getSpeed();
         final Object other$speed = other.getSpeed();
@@ -55,7 +55,7 @@ public class Wind {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final Object $speed = this.getSpeed();
         result = result * PRIME + ($speed == null ? 43 : $speed.hashCode());

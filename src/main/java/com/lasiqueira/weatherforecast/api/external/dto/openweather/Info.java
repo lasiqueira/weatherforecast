@@ -129,7 +129,7 @@ public class Info {
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof Info)) return false;
-        final Info other = (Info) o;
+        final var other = (Info) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$dt = this.getDt();
         final Object other$dt = other.getDt();
@@ -166,7 +166,7 @@ public class Info {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final Object $dt = this.getDt();
         result = result * PRIME + ($dt == null ? 43 : $dt.hashCode());

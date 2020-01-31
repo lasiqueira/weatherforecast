@@ -74,7 +74,7 @@ public class OpenWeatherMapDTO {
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof OpenWeatherMapDTO)) return false;
-        final OpenWeatherMapDTO other = (OpenWeatherMapDTO) o;
+        final var other = (OpenWeatherMapDTO) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$cod = this.getCod();
         final Object other$cod = other.getCod();
@@ -99,7 +99,7 @@ public class OpenWeatherMapDTO {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final Object $cod = this.getCod();
         result = result * PRIME + ($cod == null ? 43 : $cod.hashCode());

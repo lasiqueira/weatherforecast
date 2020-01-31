@@ -32,7 +32,7 @@ public class WeatherForecastMetricsDTO {
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof WeatherForecastMetricsDTO)) return false;
-        final WeatherForecastMetricsDTO other = (WeatherForecastMetricsDTO) o;
+        final var other = (WeatherForecastMetricsDTO) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$averageTemperatureDay = this.getAverageTemperatureDay();
         final Object other$averageTemperatureDay = other.getAverageTemperatureDay();
@@ -54,7 +54,7 @@ public class WeatherForecastMetricsDTO {
     }
 
     public int hashCode() {
-        final int PRIME = 59;
+        final var PRIME = 59;
         int result = 1;
         final Object $averageTemperatureDay = this.getAverageTemperatureDay();
         result = result * PRIME + ($averageTemperatureDay == null ? 43 : $averageTemperatureDay.hashCode());

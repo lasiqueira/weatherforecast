@@ -34,7 +34,7 @@ public class WeatherForecastController {
     @GetMapping(value="/countries/{countryCode}/cities/{city}", produces = "application/json")
     public ResponseEntity<WeatherForecastMetricsDTO> getWeatherForecastByCityAndCountry(@PathVariable String city, @PathVariable String countryCode) throws CityNotFoundException, IOException {
         logger.debug("getWeatherForecastByCity: countryCode:{}, city:{},", countryCode, city);
-        Integer cityId = weatherForecastValidator.validateCityAndCountry(city.trim(), Optional.of(countryCode.trim()));
+        var cityId = weatherForecastValidator.validateCityAndCountry(city.trim(), Optional.of(countryCode.trim()));
         return ResponseEntity.ok(weatherForecastConverter.convertModelToDTO(weatherForecastService.getWeatherForecastMetrics(cityId)));
     }
 
@@ -42,13 +42,13 @@ public class WeatherForecastController {
     @GetMapping(value="", produces = "application/json")
     public ResponseEntity<WeatherForecastMetricsDTO> getWeatherForecastByCityQueryParam(@RequestParam(name = "city") String query) throws CityNotFoundException, IOException {
         logger.debug("getWeatherForecastByCity: query:", query);
-        String[] params = query.split(",");
-        String city = params[0].trim();
+        var params = query.split(",");
+        var city = params[0].trim();
         String country = null;
         if(params.length >1){
             country = params[1].trim();
         }
-        Integer cityId = weatherForecastValidator.validateCityAndCountry(city, Optional.ofNullable(country));
+        var cityId = weatherForecastValidator.validateCityAndCountry(city, Optional.ofNullable(country));
         return ResponseEntity.ok(weatherForecastConverter.convertModelToDTO(weatherForecastService.getWeatherForecastMetrics(cityId)));
     }
 }
