@@ -1,6 +1,6 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.3.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 }
 
@@ -11,22 +11,8 @@ sourceCompatibility = '13'
 repositories {
 	mavenCentral()
 }
+apply from: 'dependencies.gradle'
 
-dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-actuator')
-	implementation('org.springframework.boot:spring-boot-starter-web')
-	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.4.0'
-    implementation('org.springframework.boot:spring-boot-starter-cache')
-    implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.6.2'
-
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-    testImplementation group: 'io.github.benas', name: 'random-beans', version: '3.7.0'
-}
 test {
 	useJUnitPlatform()
 }
