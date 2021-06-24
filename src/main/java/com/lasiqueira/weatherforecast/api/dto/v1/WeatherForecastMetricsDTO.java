@@ -1,6 +1,7 @@
 package com.lasiqueira.weatherforecast.api.dto.v1;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class WeatherForecastMetricsDTO {
     private final BigDecimal averageTemperatureDay;
@@ -36,11 +37,11 @@ public class WeatherForecastMetricsDTO {
         if (!other.canEqual((Object) this)) return false;
         final Object this$averageTemperatureDay = this.getAverageTemperatureDay();
         final Object other$averageTemperatureDay = other.getAverageTemperatureDay();
-        if (this$averageTemperatureDay == null ? other$averageTemperatureDay != null : !this$averageTemperatureDay.equals(other$averageTemperatureDay))
+        if (!Objects.equals(this$averageTemperatureDay, other$averageTemperatureDay))
             return false;
         final Object this$averageTemperatureNight = this.getAverageTemperatureNight();
         final Object other$averageTemperatureNight = other.getAverageTemperatureNight();
-        if (this$averageTemperatureNight == null ? other$averageTemperatureNight != null : !this$averageTemperatureNight.equals(other$averageTemperatureNight))
+        if (!Objects.equals(this$averageTemperatureNight, other$averageTemperatureNight))
             return false;
         final Object this$averagePressure = this.getAveragePressure();
         final Object other$averagePressure = other.getAveragePressure();

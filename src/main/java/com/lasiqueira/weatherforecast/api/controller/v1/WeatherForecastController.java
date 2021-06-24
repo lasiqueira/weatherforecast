@@ -41,7 +41,7 @@ public class WeatherForecastController {
     // Getting by queryParam
     @GetMapping(value="", produces = "application/json")
     public ResponseEntity<WeatherForecastMetricsDTO> getWeatherForecastByCityQueryParam(@RequestParam(name = "city") String query) throws CityNotFoundException, IOException {
-        logger.debug("getWeatherForecastByCity: query:", query);
+        logger.debug("getWeatherForecastByCity: query: {}", query);
         var params = query.split(",");
         var city = params[0].trim();
         String country = null;
