@@ -53,12 +53,11 @@ public class WeatherForecastControllerTest {
     @BeforeAll
     public void setup(){
         weatherForecastMetrics = random(WeatherForecastMetrics.class);
-        weatherForecastMetricsDTO = WeatherForecastMetricsDTO
-                .builder()
-                .averagePressure(weatherForecastMetrics.getAveragePressure())
-                .averageTemperatureDay(weatherForecastMetrics.getAverageTemperatureDay())
-                .averageTemperatureNight(weatherForecastMetrics.getAverageTemperatureNight())
-                .build();
+        weatherForecastMetricsDTO = new WeatherForecastMetricsDTO(
+                weatherForecastMetrics.getAverageTemperatureDay(),
+                weatherForecastMetrics.getAverageTemperatureNight(),
+                weatherForecastMetrics.getAveragePressure()
+        );
     }
 
     @Test

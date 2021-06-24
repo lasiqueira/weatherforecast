@@ -1,7 +1,6 @@
 package com.lasiqueira.weatherforecast.api.converter.v1;
 
 
-import com.lasiqueira.weatherforecast.api.dto.v1.WeatherForecastMetricsDTO;
 import com.lasiqueira.weatherforecast.model.WeatherForecastMetrics;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -35,8 +34,8 @@ public class WeatherForecastConverterTest {
         var result = weatherForecastConverter.convertModelToDTO(weatherForecastMetrics);
 
         assertNotNull(result);
-        assertEquals(weatherForecastMetrics.getAveragePressure(),result.getAveragePressure());
-        assertEquals(weatherForecastMetrics.getAverageTemperatureDay(), result.getAverageTemperatureDay());
-        assertEquals(weatherForecastMetrics.getAverageTemperatureNight(), result.getAverageTemperatureNight());
+        assertEquals(weatherForecastMetrics.getAveragePressure(),result.averagePressure());
+        assertEquals(weatherForecastMetrics.getAverageTemperatureDay(), result.averageTemperatureDay());
+        assertEquals(weatherForecastMetrics.getAverageTemperatureNight(), result.averageTemperatureNight());
     }
 }
