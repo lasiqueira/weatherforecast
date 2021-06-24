@@ -49,36 +49,18 @@ public class WeatherForecastService {
 
     private WeatherForecastMetrics extractMetrics(List<Info> infoList) {
         logger.debug("extractMetrics");
-        var avgDaily = new BigDecimal("0.00");
-        var avgNighly = new BigDecimal("0.00");
-        var avgPressure = new BigDecimal("0.00");
 
         var validMetrics = infoList.stream()
-                .filter(info -> isValidDateInterval(info.getDtTxt().toLocalDate())).collect(Collectors.toList());
+                .filter(info -> isValidDateInterval(info.getDtTxt().toLocalDate()))
+                .collect(Collectors.toList());
         var dailyMetrics = validMetrics.stream()
-                .filter(info -> isDaily(info.getDtTxt().toLocalTime())).collect(Collectors.toList());
+                .filter(info -> isDaily(info.getDtTxt().toLocalTime()))
+                .collect(Collectors.toList());
         var nightlyMetrics = validMetrics.stream()
-                .filter(info -> !isDaily(info.getDtTxt().toLocalTime())).collect(Collectors.toList());
+                .filter(info -> !isDaily(info.getDtTxt().toLocalTime()))
+                .collect(Collectors.toList());
 
-        avgPressure = avgPressure.add(BigDecimal.valueOf(
-                validMetrics
-                        .stream()
-                        .mapToDouble(info -> info.getMain().getPressure())
-                        .average()
-                        .orElse(0.0)));
-        avgDaily = avgDaily.add(BigDecimal.valueOf(
-                dailyMetrics
-                        .stream()
-                        .mapToDouble(info -> info.getMain().getTemp())
-                        .average()
-                        .orElse(0.0)));
-        avgNighly = avgNighly.add(BigDecimal.valueOf(
-                nightlyMetrics.stream()
-                        .mapToDouble(info -> info.getMain().getTemp())
-                        .average()
-                        .orElse(0.0)));
-
-        return new WeatherForecastMetrics(avgDaily, avgNighly, avgPressure);
+        return new WeatherForecastMetrics(getDailyAverage(dailyMetrics), getNightlyAverage(nightlyMetrics), getPressureAverage(validMetrics));
     }
 
     private boolean isValidDateInterval(LocalDate forecastDate) {
@@ -92,5 +74,30 @@ public class WeatherForecastService {
         return forecastTime.getHour() >= 6 && forecastTime.getHour() < 18;
     }
 
+    private BigDecimal getDailyAverage(List<Info> infoList) {
+        var avgDaily = new BigDecimal("0.00");
+        return avgDaily.add(BigDecimal.valueOf(
+                infoList.stream()
+                        .mapToDouble(info -> info.getMain().getTemp())
+                        .average()
+                        .orElse(0.0)));
+    }
 
+    private BigDecimal getNightlyAverage(List<Info> infoList) {
+        var avgNighly = new BigDecimal("0.00");
+        return avgNighly.add(BigDecimal.valueOf(
+                infoList.stream()
+                        .mapToDouble(info -> info.getMain().getTemp())
+                        .average()
+                        .orElse(0.0)));
+    }
+
+    private BigDecimal getPressureAverage(List<Info> infoList) {
+        var avgPressure = new BigDecimal("0.00");
+        return avgPressure.add(BigDecimal.valueOf(
+                infoList.stream()
+                        .mapToDouble(info -> info.getMain().getPressure())
+                        .average()
+                        .orElse(0.0)));
+    }
 }
