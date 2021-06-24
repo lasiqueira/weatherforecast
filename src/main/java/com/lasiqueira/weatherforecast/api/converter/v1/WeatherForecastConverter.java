@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WeatherForecastConverter {
-    private Logger logger;
+    private final Logger logger;
 
     public WeatherForecastConverter() {
         this.logger = LoggerFactory.getLogger(WeatherForecastConverter.class);
@@ -16,12 +16,12 @@ public class WeatherForecastConverter {
 
     public WeatherForecastMetricsDTO convertModelToDTO(WeatherForecastMetrics weatherForecastMetrics){
         logger.debug("convertModelToDTO: {}", weatherForecastMetrics);
-        return WeatherForecastMetricsDTO
-                .builder()
-                .averagePressure(weatherForecastMetrics.getAveragePressure())
-                .averageTemperatureDay(weatherForecastMetrics.getAverageTemperatureDay())
-                .averageTemperatureNight(weatherForecastMetrics.getAverageTemperatureNight())
-                .build();
+        return new WeatherForecastMetricsDTO(
+                weatherForecastMetrics.getAverageTemperatureDay(),
+                weatherForecastMetrics.getAverageTemperatureNight(),
+                weatherForecastMetrics.getAveragePressure()
+        );
+
 
     }
 }
