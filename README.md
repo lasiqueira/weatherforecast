@@ -1,5 +1,5 @@
 # weatherforecast
-Java 13 and Spring boot 2 Weather Forecast REST API
+Java 16 and Spring boot 2 Weather Forecast REST API
 
 ## Setup
 You need to inform an API Key for the OpenWeatherMAP API in application.properties
@@ -8,7 +8,7 @@ You need to inform an API Key for the OpenWeatherMAP API in application.properti
 
 You can get one by making a free account at [https://openweathermap.org/]
 
-You need [JDK13+](https://jdk.java.net/) and [Gradle 6.0.1+](https://gradle.org/releases/) to build and run this project.
+You need [JDK16+](https://jdk.java.net/) and [Gradle 7.0.2+](https://gradle.org/releases/) to build and run this project.
 
 ## Building
 `gradle clean build`
