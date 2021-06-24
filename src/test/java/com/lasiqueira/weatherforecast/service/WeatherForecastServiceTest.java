@@ -5,6 +5,7 @@ import com.lasiqueira.weatherforecast.api.external.client.OpenWeatherMapAPI;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.Info;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.Main;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.OpenWeatherMapDTO;
+import io.github.benas.randombeans.EnhancedRandomBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 
-import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -46,7 +46,7 @@ public class WeatherForecastServiceTest {
 
     @BeforeAll
     public void setup(){
-        openWeatherMapDTO = random(OpenWeatherMapDTO.class);
+        openWeatherMapDTO = EnhancedRandomBuilder.aNewEnhancedRandom().nextObject(OpenWeatherMapDTO.class);
         openWeatherMapDTO.setInfo(new ArrayList<>());
         var info1 = new Info();
         var main1 = new Main();
@@ -99,9 +99,9 @@ public class WeatherForecastServiceTest {
         var result = weatherForecastService.getWeatherForecastMetrics(CITY_ID);
         assertNotNull(result);
 
-        assertEquals(new BigDecimal("637.50"), result.getAveragePressure());
-        assertEquals(new BigDecimal("28.50"),result.getAverageTemperatureDay());
-        assertEquals(new BigDecimal("21.00"), result.getAverageTemperatureNight());
+        assertEquals(new BigDecimal("637.50"), result.averagePressure());
+        assertEquals(new BigDecimal("28.50"),result.averageTemperatureDay());
+        assertEquals(new BigDecimal("21.00"), result.averageTemperatureNight());
     }
 
     @Test

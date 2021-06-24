@@ -78,12 +78,7 @@ public class WeatherForecastService {
                         .average()
                         .orElse(0.0)));
 
-        return WeatherForecastMetrics
-                .builder()
-                .averagePressure(avgPressure)
-                .averageTemperatureDay(avgDaily)
-                .averageTemperatureNight(avgNighly)
-                .build();
+        return new WeatherForecastMetrics(avgDaily, avgNighly, avgPressure);
     }
 
     private boolean isValidDateInterval(LocalDate forecastDate) {

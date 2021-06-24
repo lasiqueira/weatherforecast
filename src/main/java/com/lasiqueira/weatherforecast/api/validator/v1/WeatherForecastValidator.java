@@ -13,10 +13,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 @Component
@@ -29,7 +26,7 @@ public class WeatherForecastValidator {
         this.cityMap = new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("json/city.list.json").toURI());
+        Path path = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("json/city.list.json")).toURI());
         List<CityDTO> cityDTOList = objectMapper.readValue(Files.readAllBytes(path), new TypeReference<List<CityDTO>>() {});
         cityDTOList.forEach(cityDTO -> cityMap.put((cityDTO.getName()+cityDTO.getCountry()).toLowerCase(), cityDTO));
     }

@@ -17,9 +17,9 @@ public class WeatherForecastConverter {
     public WeatherForecastMetricsDTO convertModelToDTO(WeatherForecastMetrics weatherForecastMetrics){
         logger.debug("convertModelToDTO: {}", weatherForecastMetrics);
         return new WeatherForecastMetricsDTO(
-                weatherForecastMetrics.getAverageTemperatureDay(),
-                weatherForecastMetrics.getAverageTemperatureNight(),
-                weatherForecastMetrics.getAveragePressure()
+                weatherForecastMetrics.averageTemperatureDay(),
+                weatherForecastMetrics.averageTemperatureNight(),
+                weatherForecastMetrics.averagePressure()
         );
 
 

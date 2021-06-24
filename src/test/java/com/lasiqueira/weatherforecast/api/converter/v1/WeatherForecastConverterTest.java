@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static io.github.benas.randombeans.api.EnhancedRandom.random;
+import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -25,7 +25,7 @@ public class WeatherForecastConverterTest {
 
     @BeforeAll
     public void setup(){
-        weatherForecastMetrics = random(WeatherForecastMetrics.class);
+        weatherForecastMetrics = new WeatherForecastMetrics(BigDecimal.valueOf(19.02), BigDecimal.valueOf(12.23), BigDecimal.valueOf(160.12));
     }
 
 
@@ -34,8 +34,8 @@ public class WeatherForecastConverterTest {
         var result = weatherForecastConverter.convertModelToDTO(weatherForecastMetrics);
 
         assertNotNull(result);
-        assertEquals(weatherForecastMetrics.getAveragePressure(),result.averagePressure());
-        assertEquals(weatherForecastMetrics.getAverageTemperatureDay(), result.averageTemperatureDay());
-        assertEquals(weatherForecastMetrics.getAverageTemperatureNight(), result.averageTemperatureNight());
+        assertEquals(weatherForecastMetrics.averagePressure(),result.averagePressure());
+        assertEquals(weatherForecastMetrics.averageTemperatureDay(), result.averageTemperatureDay());
+        assertEquals(weatherForecastMetrics.averageTemperatureNight(), result.averageTemperatureNight());
     }
 }

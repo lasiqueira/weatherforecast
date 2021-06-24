@@ -19,9 +19,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Optional;
-
-import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -52,11 +51,11 @@ public class WeatherForecastControllerTest {
 
     @BeforeAll
     public void setup(){
-        weatherForecastMetrics = random(WeatherForecastMetrics.class);
+        weatherForecastMetrics =  new WeatherForecastMetrics(BigDecimal.valueOf(18.0), BigDecimal.valueOf(10.10), BigDecimal.valueOf(54.38));
         weatherForecastMetricsDTO = new WeatherForecastMetricsDTO(
-                weatherForecastMetrics.getAverageTemperatureDay(),
-                weatherForecastMetrics.getAverageTemperatureNight(),
-                weatherForecastMetrics.getAveragePressure()
+                weatherForecastMetrics.averageTemperatureDay(),
+                weatherForecastMetrics.averageTemperatureNight(),
+                weatherForecastMetrics.averagePressure()
         );
     }
 
