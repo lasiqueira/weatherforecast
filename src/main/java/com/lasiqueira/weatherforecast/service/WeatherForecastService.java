@@ -42,9 +42,11 @@ public class WeatherForecastService {
 
     private OpenWeatherMapDTO getWeatherForecast(Integer cityId) throws IOException {
         logger.debug("getWeatherForecast: {}", cityId);
-        return openWeatherMapAPI.getWeather5Day(cityId, UNIT, apiKey)
-                .execute()
-                .body();
+        var response = openWeatherMapAPI.getWeather5Day(cityId, UNIT, apiKey).execute();
+        if (!response.isSuccessful() || response.body() == null) {
+            throw new IOException("OpenWeatherMap request failed with HTTP status " + response.code());
+        }
+        return response.body();
     }
 
     private WeatherForecastMetrics extractMetrics(List<Info> infoList) {
