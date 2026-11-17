@@ -1,12 +1,16 @@
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-actuator')
-    implementation('org.springframework.boot:spring-boot-starter-web')
-    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.9'
-    implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
-    implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.9.0'
+    implementation('org.springframework.boot:spring-boot-starter-webmvc')
+    implementation('org.springdoc:springdoc-openapi-starter-webmvc-ui:3.2.0')
+    implementation('com.squareup.retrofit2:retrofit:3.0.0')
+    // converter-jackson uses Jackson 2 (com.fasterxml.jackson); versions are managed by Spring Boot's jackson-2-bom
+    implementation('com.squareup.retrofit2:converter-jackson:3.0.0')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     implementation('org.springframework.boot:spring-boot-starter-cache')
-    implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '3.0.2'
+    implementation('com.github.ben-manes.caffeine:caffeine')
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation group: 'io.github.benas', name: 'random-beans', version: '3.9.0'
+    testImplementation('org.springframework.boot:spring-boot-starter-webmvc-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-cache-test')
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }

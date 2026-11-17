@@ -5,7 +5,8 @@ import com.lasiqueira.weatherforecast.api.external.client.OpenWeatherMapAPI;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.Info;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.Main;
 import com.lasiqueira.weatherforecast.api.external.dto.openweather.OpenWeatherMapDTO;
-import io.github.benas.randombeans.EnhancedRandomBuilder;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -35,9 +36,9 @@ import static org.mockito.Mockito.when;
 public class WeatherForecastServiceTest {
     @Autowired
     private WeatherForecastService weatherForecastService;
-    @MockBean
+    @MockitoBean
     private OpenWeatherMapAPI openWeatherMapAPI;
-    @MockBean
+    @MockitoBean
     Call<OpenWeatherMapDTO> call;
 
     private OpenWeatherMapDTO openWeatherMapDTO;
@@ -46,7 +47,9 @@ public class WeatherForecastServiceTest {
 
     @BeforeAll
     public void setup(){
-        openWeatherMapDTO = EnhancedRandomBuilder.aNewEnhancedRandom().nextObject(OpenWeatherMapDTO.class);
+        openWeatherMapDTO = new OpenWeatherMapDTO();
+        openWeatherMapDTO.setCod("200");
+        openWeatherMapDTO.setCnt(5);
         openWeatherMapDTO.setInfo(new ArrayList<>());
         var info1 = new Info();
         var main1 = new Main();
@@ -108,6 +111,13 @@ public class WeatherForecastServiceTest {
     public void getWeatherForecastMetricsExceptionTest() throws IOException {
         when(openWeatherMapAPI.getWeather5Day(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString())).thenReturn(call);
         when(call.execute()).thenThrow(IOException.class);
+        Assertions.assertThrows(IOException.class, () -> weatherForecastService.getWeatherForecastMetrics(CITY_ID));
+    }
+
+    @Test
+    public void getWeatherForecastMetricsUnsuccessfulResponseTest() throws IOException {
+        when(openWeatherMapAPI.getWeather5Day(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString())).thenReturn(call);
+        when(call.execute()).thenReturn(Response.error(401, ResponseBody.create("{\"cod\":401}", MediaType.get("application/json"))));
         Assertions.assertThrows(IOException.class, () -> weatherForecastService.getWeatherForecastMetrics(CITY_ID));
     }
 

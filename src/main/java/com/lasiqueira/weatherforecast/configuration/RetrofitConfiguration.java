@@ -1,5 +1,7 @@
 package com.lasiqueira.weatherforecast.configuration;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lasiqueira.weatherforecast.api.external.client.OpenWeatherMapAPI;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +27,9 @@ public class RetrofitConfiguration {
     public OpenWeatherMapAPI getOpenWeatherMapAPI(@Value("${openweathermap.url}") String url, OkHttpClient okHttpClient){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
-                .addConverterFactory(JacksonConverterFactory.create())
+                // Retrofit's converter uses Jackson 2; ignore fields OpenWeatherMap added after the DTOs were written
+                .addConverterFactory(JacksonConverterFactory.create(
+                        new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)))
                 .client(okHttpClient)
                 .build();
 
